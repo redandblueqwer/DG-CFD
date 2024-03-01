@@ -22,7 +22,7 @@ def projection(f, a, b, order):
     return coefficient
 
 
-def seg_coef(f, a, b, N, k_order=4):
+def seg_coef(f, a, b, N, k_order=3):
     '''
         f      : is continuous function, not include discontinuous solution
         [a,b]  : is total interval

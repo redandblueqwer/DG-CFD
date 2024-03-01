@@ -6,20 +6,24 @@ def basis_function(x):
         basis_function :               p = [p0, p1, p2, p3]
         partial_derivations function : p_x = [p0_x, p1_x, p2_x, p3_x]
         inner product at [-1,1] :      M = [2, 2 / 3.0, 8 / 45.0, 8 / 175.0]
+        Tode write 递推式
     """
     p0 = 1
     p1 = x
     p2 = x ** 2 - 1 / 3.0
     p3 = x ** 3 - (3 / 5.0) * x
+    # p = [p0, p1, p2]
     p = [p0, p1, p2, p3]
 
     p0_x = 0
     p1_x = 1
     p2_x = 2 * x
     p3_x = 3 * x ** 2 - 3 / 5.0
+    # p_x = [p0_x, p1_x, p2_x]
     p_x = [p0_x, p1_x, p2_x, p3_x]
 
-    M = [2, 2 / 3.0, 8 / 45.0, 8 / 175.0]
+    M = [2.0, 2 / 3.0, 8 / 45.0]
+    # M = [2.0, 2 / 3.0, 8 / 45.0, 8 / 175.0]
 
     return p, M, p_x
 

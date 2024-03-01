@@ -20,6 +20,7 @@ from Basis_Function import basis_function
 from L2_Projection import seg_coef
 from RK import rk3
 
+# np.set_printoptions(precision=64)
 
 def inital(x):
     return np.sin(x)
@@ -35,7 +36,7 @@ def F(x):
     return x
 
 
-def init_data(a, b, N, u_0, k_order=4):
+def init_data(a, b, N, u_0, k_order=3):
     """
     :param a: interval begin
     :param b: interval end
@@ -70,8 +71,8 @@ def get_plot_point(an_i, x_a, x_b, num=5):
 
 
 def calculate_L2error(numerical_solution, real_solution):
-    error = np.sum((numerical_solution - real_solution) ** 2)
-    error = np.sqrt(error)
+    diefference = numerical_solution - real_solution
+    error = np.sqrt(np.sum(diefference ** 2))
     return error
 
 
@@ -80,16 +81,18 @@ if __name__ == "__main__":
     N = np.array([10,20,40])
     total_error = np.zeros(len(N))
     for n in range(0, len(N)):
-        tn = 0.001
+        tn = 10
         interval, delt_x, a0 = init_data(-2 * np.pi, 2 * np.pi, N[n], inital)
-        an = rk3(a0, F, delt_x, delt_t=0.000001, t_end=tn)
+        an = rk3(a0, F, delt_x, delt_t=0.0005, t_end=tn)
+        print(f"an shape: {an.shape}")
         # plot
         for i in range(0, len(interval) - 1):
             x, y = get_plot_point(an[i], interval[i], interval[i + 1], num=5)
             plt.scatter(x, y, color='black')
-            plt.plot(x, real_solution(x, t = tn))
+            plt.plot(x, real_solution(x, t=tn))
             total_error[n] = total_error[n] + calculate_L2error(y, real_solution(x, t=tn))
 
+    print(total_error)
     result = np.log2(np.divide(total_error[:-1], total_error[1:]))
     print(result)
     plt.scatter(x, y, label='DG solution', color='black')
